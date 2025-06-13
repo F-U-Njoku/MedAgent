@@ -12,6 +12,9 @@ pandas = "*"
 streamlit = "*"
 beautifulsoup4 = "*"
 requests = "*"
+langchain-community = "*"
+langchain-huggingface = "*"
+langchain-chroma = "*"
 
 [dev-packages]
 black = "*"
