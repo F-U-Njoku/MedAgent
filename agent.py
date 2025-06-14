@@ -33,17 +33,30 @@ web_tool = DuckDuckGoSearchRun(name="WebSearch")
 
 tools = [drug_tool, search_trials, web_tool]
 
-prompt = PromptTemplate(
-        input_variables=["input", "agent_scratchpad"],
-        template="""You are a helpful medical information agent. 
+template = '''You are a helpful medical information agent. 
         Use the available tools to answer medical questions accurately.
-        
         You have access to these tools:
         {tools}
-        
+
+        Use the following format:
+
+        Question: the input question you must answer
+        Thought: you should always think about what to do
+        Action: the action to take, should be one of [{tool_names}]
+        Action Input: the input to the action
+        Observation: the result of the action
+        ... (this Thought/Action/Action Input/Observation can repeat 5 times)
+        Thought: I now know the final answer
+        Final Answer: the final answer to the original input question.
+        If you don't have a satisfactory answer, you can creatively say you don't know.
+
+        Begin!
+
         Question: {input}
-        {agent_scratchpad}"""
-    )
+        Thought:{agent_scratchpad}'''
+
+prompt = PromptTemplate.from_template(template)
+
 
 # 🚀 Initialize the agent
 medagent = create_react_agent(
