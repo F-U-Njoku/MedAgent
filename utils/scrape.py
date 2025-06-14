@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 HEADERS = {"User-Agent": "Mozilla/5.0"}
 
 def scrape_medlineplus_drug(url: str) -> Dict:
-    r = requests.get(url, headers=HEADERS)
+    r = requests.get(url, headers=HEADERS, timeout=10)
     soup = BeautifulSoup(r.text, 'html.parser')
 
     name = soup.find("h1").text.strip()
@@ -51,7 +51,7 @@ if __name__ == "__main__":
         "https://medlineplus.gov/druginfo/meds/a611014.html",  # Ceftaroline
         "https://medlineplus.gov/druginfo/meds/a611003.html",  # Liraglutide
         "https://medlineplus.gov/druginfo/meds/a699002.html",  # Diclofenac and Misoprostol 
-        "https://medlineplus.gov/druginfo/meds/a604002.html",  # DAlfuzosin 
+        "https://medlineplus.gov/druginfo/meds/a604002.html",  # Alfuzosin 
         "https://medlineplus.gov/druginfo/meds/a682145.html",  # Albuterol
         "https://medlineplus.gov/druginfo/meds/a693050.html",  # Omeprazole
         "https://medlineplus.gov/druginfo/meds/a682461.html",  # Levothyroxine

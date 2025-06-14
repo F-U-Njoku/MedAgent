@@ -16,6 +16,9 @@ langchain-community = "*"
 langchain-huggingface = "*"
 langchain-chroma = "*"
 langchain-openai = "*"
+google-generativeai = "*"
+python-dotenv = "*"
+duckduckgo-search = "*"
 
 [dev-packages]
 black = "*"

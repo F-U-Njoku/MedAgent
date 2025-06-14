@@ -139,7 +139,7 @@ class ClinicalTrialsAPI:
             params['fields'] = ','.join(fields)
         
         try:
-            response = self.session.get(endpoint, params=params)
+            response = self.session.get(endpoint, params=params, timeout=15)
             response.raise_for_status()
             return response.json() if format == 'json' else response.text
         except requests.exceptions.RequestException as e:
