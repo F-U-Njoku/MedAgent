@@ -6,7 +6,7 @@ import sys
 sys.modules['sqlite3'] = pysqlite3
 
 import streamlit as st
-from agent import medagent
+from agent import agent_executor
 
 def main():
     # 🧪 App Config
@@ -20,7 +20,7 @@ def main():
     if query:
         with st.spinner("Thinking..."):
             try:
-                result =  medagent.invoke({"input": query})
+                result = agent_executor.invoke({"input": query})
                 st.markdown("### 🧠 Answer")
                 st.markdown(result)
             except Exception as e:

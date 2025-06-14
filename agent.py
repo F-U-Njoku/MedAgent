@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from langchain.tools import Tool
 from langchain_core.prompts import PromptTemplate
-from langchain.agents import create_react_agent, AgentType
+from langchain.agents import create_react_agent, AgentExecutor
 from langchain_community.tools import DuckDuckGoSearchRun
 from langchain_openai import ChatOpenAI
 
@@ -66,4 +66,10 @@ medagent = create_react_agent(
     tools=tools,
     llm=llm,
     prompt=prompt
+)
+
+agent_executor = AgentExecutor.from_agent_and_tools(
+    agent=medagent,
+    tools=tools,
+    verbose=True
 )
