@@ -20,6 +20,7 @@ google-generativeai = "*"
 python-dotenv = "*"
 duckduckgo-search = "*"
 pysqlite3-binary = "*"
+langchain-core = "*"
 
 [dev-packages]
 black = "*"

@@ -1,7 +1,8 @@
 import os
 from dotenv import load_dotenv
 from langchain.tools import Tool
-from langchain.agents import initialize_agent, AgentType
+from langchain_core.prompts import PromptTemplate
+from langchain.agents import create_react_agent, AgentType
 from langchain_community.tools import DuckDuckGoSearchRun
 from langchain_openai import ChatOpenAI
 
@@ -30,10 +31,31 @@ search_trials = get_clinical_trials_tool()
 # 🧠 Tool 3: DuckDuckGo web search
 web_tool = DuckDuckGoSearchRun(name="WebSearch")
 
+tools = [drug_tool, search_trials, web_tool]
+
+prompt = PromptTemplate(
+        input_variables=["input", "agent_scratchpad"],
+        template="""You are a helpful medical information agent. 
+        Use the available tools to answer medical questions accurately.
+        
+        You have access to these tools:
+        {tools}
+        
+        Question: {input}
+        {agent_scratchpad}"""
+    )
+
 # 🚀 Initialize the agent
-medagent = initialize_agent(
-    tools=[drug_tool, search_trials, web_tool],
+medagent = create_react_agent(
+    tools=tools,
     llm=llm,
     agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
     verbose=True
 )
+
+
+from langchain.agents import create_react_agent
+from langchain_core.prompts import PromptTemplate
+
+# Create agent using the new method
+medagent = create_react_agent(llm, tools, prompt)

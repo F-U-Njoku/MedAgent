@@ -7,7 +7,7 @@ from langchain_core.documents import Document
 embedding = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 vectordb = Chroma(persist_directory="chroma_db", embedding_function=embedding)
 
-def retrieve_drug_info(query: str, k: int = 2, threshold: float = 0.5) -> List[Document]:
+def retrieve_drug_info(query: str, k: int = 2, threshold: float = 0.0) -> List[Document]:
     retriever = vectordb.as_retriever(
         search_type="similarity_score_threshold",
         search_kwargs={"k": k, "score_threshold": threshold}
