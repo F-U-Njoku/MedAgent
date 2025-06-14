@@ -18,20 +18,23 @@ if not os.getenv("OPENAI_API_KEY"):
 # ✅ GPT-4 model
 llm = ChatOpenAI(model_name="gpt-4", temperature=0)
 
-# 🧠 Tool 1: Drug info from Chroma
+# Tool 1: Drug info from local RAG index
 drug_tool = Tool(
     name="DrugInfoRetriever",
-    func=lambda q: "\n\n".join([doc.page_content for doc in retrieve_drug_info(q)]),
-    description="Use this tool to retrieve information about drug usage, side effects, and precautions."
+    func=lambda q: "\n\n".join(doc.page_content for doc in retrieve_drug_info(q)),
+    description=(
+        "Extract detailed drug information (uses, side effects, precautions) "
+        "from local MedlinePlus data. Input: string drug name."
+    ),
 )
 
-# 🧠 Tool 2: ClinicalTrials.gov search
-search_trials = get_clinical_trials_tool()
+# Tool 2: ClinicalTrials.gov live lookup
+clinical_trials_tool = get_clinical_trials_tool()
 
-# 🧠 Tool 3: DuckDuckGo web search
-web_tool = DuckDuckGoSearchRun(name="WebSearch")
+# Tool 3: Web search fallback
+web_search_tool = DuckDuckGoSearchRun(name="WebSearch")
 
-tools = [drug_tool, search_trials, web_tool]
+tools = [drug_tool, clinical_trials_tool, web_search_tool]
 
 template = '''You are a helpful medical information agent. 
         Use the available tools to answer medical questions accurately.
