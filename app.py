@@ -1,5 +1,7 @@
 import os
-os.environ["STREAMLIT_SERVER_FILE_WATCHER_TYPE"] = "none"
+os.environ["STREAMLIT_SERVER_ENABLE_FILE_WATCHER"] = "false"
+
+
 
 import pysqlite3
 import sys
