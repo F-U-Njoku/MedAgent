@@ -48,7 +48,5 @@ prompt = PromptTemplate(
 # 🚀 Initialize the agent
 medagent = create_react_agent(
     tools=tools,
-    llm=llm,
-    agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
-    verbose=True
+    llm=llm
 )
