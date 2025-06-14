@@ -52,10 +52,3 @@ medagent = create_react_agent(
     agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
     verbose=True
 )
-
-
-from langchain.agents import create_react_agent
-from langchain_core.prompts import PromptTemplate
-
-# Create agent using the new method
-medagent = create_react_agent(llm, tools, prompt)
