@@ -19,7 +19,7 @@ langchain-openai = "*"
 google-generativeai = "*"
 python-dotenv = "*"
 duckduckgo-search = "*"
-pysqlite3 = "*"
+pysqlite3-binary = "*"
 
 [dev-packages]
 black = "*"
