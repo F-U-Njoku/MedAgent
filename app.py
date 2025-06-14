@@ -1,6 +1,9 @@
 import os
 os.environ["STREAMLIT_SERVER_ENABLE_FILE_WATCHER"] = "false"
 
+import torch
+torch.classes.__path__ = []
+
 
 
 import pysqlite3
