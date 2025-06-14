@@ -22,7 +22,7 @@ def main():
             try:
                 result = agent_executor.invoke({"input": query})
                 st.markdown("### 🧠 Answer")
-                st.markdown(result)
+                st.markdown(result["output"])
             except Exception as e:
                 st.error("Something went wrong. Please try again.")
                 st.exception(e)
