@@ -15,6 +15,7 @@ requests = "*"
 langchain-community = "*"
 langchain-huggingface = "*"
 langchain-chroma = "*"
+langchain-openai = "*"
 
 [dev-packages]
 black = "*"

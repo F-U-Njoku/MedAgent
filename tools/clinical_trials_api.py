@@ -300,44 +300,6 @@ def get_trial_summary(nct_id: str):
         "NCTId", "BriefTitle", "OfficialTitle", "OverallStatus", 
         "Phase", "StudyType", "Condition", "InterventionName",
         "PrimaryOutcome", "StartDate", "CompletionDate", "LocationCity",
-        "LocationState", "LocationCountry", "SponsorName"
+        "LocationState", "LocationCountry"
     ]
     return api.get_study_details(nct_id, fields=key_fields)
-
-# Usage example:
-if __name__ == "__main__":
-    # Initialize the API client
-    ct_api = create_clinical_trials_tool()
-    
-    # First, test the API connection
-    print("Testing API connection...")
-    test_result = ct_api.test_api_connection()
-    print(f"Test result: {test_result}")
-    
-    if not test_result.get('success'):
-        print("API connection failed. Check the test result above for details.")
-    else:
-        print("API connection successful!")
-        
-        # Example 1: Basic search with simple condition
-        results = ct_api.search_studies(
-            condition="diabetes",
-            page_size=10
-        )
-        print(f"Found {len(results['studies'])} diabetes trials")
-        
-        # Example 2: Try a broader search
-        broad_results = ct_api.search_studies(
-            query_term="diabetes",
-            page_size=10
-        )
-        print(f"Broad search found {len(broad_results['studies'])} results")
-        
-        # Example 3: Get specific study details
-        if results.get('studies'):
-            first_study = results['studies'][0]
-            nct_id = first_study.get('protocolSection', {}).get('identificationModule', {}).get('nctId')
-            
-            if nct_id:
-                study_details = get_trial_summary(nct_id)
-                print(f"Details for {nct_id}: \n {study_details}")
