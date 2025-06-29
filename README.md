@@ -145,4 +145,3 @@ MIT — free for personal and commercial use.
 * [LangChain](https://www.langchain.com/)
 * [MedlinePlus](https://medlineplus.gov/)
 * [ClinicalTrials.gov](https://clinicaltrials.gov/)
-* [IQVIA](https://www.iqvia.com/)
