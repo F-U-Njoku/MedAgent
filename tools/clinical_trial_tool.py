@@ -1,7 +1,9 @@
-from langchain.tools import Tool
+from langchain.tools import tool
 from tools.clinical_trials_api import ClinicalTrialsAPI
 
-def get_clinical_trials_tool():
+@tool("ClinicalTrialsSearch")
+def clinical_trials_tool(query: str) -> str:
+    "Useful for finding clinical trials related to a drug or condition."
     api = ClinicalTrialsAPI()
 
     def trial_search(query: str) -> str:
@@ -20,9 +22,3 @@ def get_clinical_trials_tool():
             except Exception:
                 continue
         return "\n".join(formatted)
-
-    return Tool(
-        name="ClinicalTrialsSearch",
-        func=trial_search,
-        description="Useful for finding clinical trials related to a drug or condition."
-    )

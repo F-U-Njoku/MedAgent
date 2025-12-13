@@ -12,4 +12,4 @@ def retrieve_drug_info(query: str, k: int = 2, threshold: float = 0.0) -> List[D
         search_type="similarity_score_threshold",
         search_kwargs={"k": k, "score_threshold": threshold}
     )
-    return retriever.get_relevant_documents(query)
+    return retriever.invoke(query)
