@@ -32,4 +32,4 @@ jobs:
           --region ${{ env.REGION }} \
           --allow-unauthenticated \
           --set-env-vars MODEL_NAME="gemini-2.5-flash" \
-          --set-env-vars GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }} 
+          --set-secrets GEMINI_API_KEY=GEMINI_API_KEY:latest
