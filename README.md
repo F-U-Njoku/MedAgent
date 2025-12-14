@@ -2,7 +2,7 @@
 
 **MedAgent** is an agent-powered AI assistant that answers drug-related questions using Retrieval-Augmented Generation (RAG), live clinical trial data, and web search — tailored for healthcare professionals, researchers, and medical learners.
 
-Built for interview-readiness at IQVIA, this project showcases:
+This project showcases:
 
 * LangChain ReAct agent orchestration
 * Chroma vector store indexing
@@ -14,7 +14,7 @@ Built for interview-readiness at IQVIA, this project showcases:
 
 ## ✨ Features
 
-* 🧠 **LLM-Powered QA**: Uses GPT-4 (via OpenAI API) to reason and answer complex drug-related questions.
+* 🧠 **LLM-Powered QA**: Uses Google Gemini (via Google GenAI API) to reason and answer complex drug-related questions.
 * 🔍 **RAG from MedlinePlus**: Retrieves indexed drug usage, side effects, and precautions.
 * 🧪 **Live Clinical Trials**: Queries real-time data from ClinicalTrials.gov via API v2.
 * 🌐 **Web Fallback**: DuckDuckGo integration to answer open-ended or time-sensitive questions.
@@ -27,12 +27,12 @@ Built for interview-readiness at IQVIA, this project showcases:
 
 | Layer        | Tech                                                   |
 | ------------ | ------------------------------------------------------ |
-| 💬 LLM       | `OpenAI GPT-4`                                         |
+| 💬 LLM       | `Google Gemini`                                        |
 | 📚 RAG       | `LangChain`, `HuggingFaceEmbeddings`, `Chroma` |
 | 🔎 Tools     | `DuckDuckGoSearch`, `ClinicalTrials.gov API`           |
 | 🌐 UI        | `Streamlit`                                            |
-| 🐍 Env Mgmt  | `pipenv`                                               |
-| 📦 Packaging | `.env`, `pipfile`, `Docker-ready`                      |
+| ⚡ Env Mgmt  | `uv`                                                   |
+| 📦 Packaging | `pyproject.toml`, `uv.lock`                            |
 | 📀 Storage   | Local CSV + vectorstore                                |
 
 ---
@@ -52,10 +52,10 @@ medagent/
 │   ├── ingest_embed.py             # Index CSV data to vectorstore
 │   └── scrape.py                   # Scrapes MedlinePlus drug info
 ├── app.py                 # Streamlit frontend
-├── agent_react.py         # ReAct agent setup
-├── agent_executor.py      # AgentExecutor for reliable agent loop
-├── .env                   # Stores OPENAI_API_KEY
-├── Pipfile / Pipfile.lock
+├── agent.py               # ReAct agent setup & execution
+├── .env                   # Stores GEMINI_API_KEY
+├── pyproject.toml
+├── uv.lock
 └── README.md
 ```
 
@@ -70,31 +70,35 @@ medagent/
    cd medagent
    ```
 
-2. **Set up environment**
+2. **Set up environment with uv**
 
    ```bash
-   pipenv install
-   pipenv shell
+   # Install uv if you haven't already
+   curl -LsSf https://astral.sh/uv/install.sh | sh
+
+   # Sync dependencies
+   uv sync
    ```
 
 3. **Set your API key**
    Create a `.env` file:
 
    ```
-   OPENAI_API_KEY=your-openai-key
+   GEMINI_API_KEY=your-google-genai-key
+   MODEL_NAME=gemini-pro
    ```
 
 4. **Scrape and embed drug data**
 
    ```bash
-   python utils/scrape.py
-   python utils/ingest_embed.py
+   uv run python utils/scrape.py
+   uv run python utils/ingest_embed.py
    ```
 
 5. **Run Streamlit**
 
    ```bash
-   streamlit run app.py
+   uv run -- streamlit run app.py
    ```
 
 ---
@@ -114,13 +118,13 @@ medagent/
 Question → Thought → Action → Observation → Thought → ... → Final Answer
 ```
 
-Your agent dynamically chooses tools: local vectorstore, clinical trials API, or DuckDuckGo — depending on the query type.
+MedAgent dynamically chooses tools: local vectorstore, clinical trials API, or DuckDuckGo — depending on the query type.
 
 ---
 
 ## 🔐 Notes
 
-* Chroma requires SQLite ≥ 3.35, so we patched it using `pysqlite3-binary` for Streamlit compatibility.
+* Chroma requires SQLite ≥ 3.35, so I patched it using `pysqlite3-binary` for Streamlit compatibility.
 * Streamlit file watcher disabled to avoid `torch.classes` runtime error.
 
 ---
